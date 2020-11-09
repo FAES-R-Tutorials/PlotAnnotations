@@ -2,6 +2,7 @@
 # PlotAnnotations
 
 <!-- badges: start -->
+[![R build status](https://github.com/FAES-R-Tutorials/PlotAnnotations/workflows/R-CMD-check/badge.svg)](https://github.com/FAES-R-Tutorials/PlotAnnotations/actions)
 <!-- badges: end -->
 
 The goal of PlotAnnotations is to ...
