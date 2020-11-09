@@ -1,0 +1,5 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^inst/tutorials/plot_annotations/plot_annotations\.Rmd$
+^LICENSE\.md$
+^\.github$

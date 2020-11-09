@@ -9,18 +9,19 @@ The goal of PlotAnnotations is to ...
 
 ## Installation
 
-You can install the released version of PlotAnnotations from [CRAN](https://CRAN.R-project.org) with:
+You can install this package using
 
 ``` r
-install.packages("PlotAnnotations")
+# install.packages("remotes")
+remotes::install_github("FAES-R-Tutorials/PlotAnnotations")
 ```
 
-## Example
+## Starting the tutorial
 
-This is a basic example which shows you how to solve a common problem:
+Once you install this package, the tutorial should appear in your RStudio tutorial pane as "Adding annotations to ggplots". You can start the tutorial using the button.
+
+Otherwise, you can start the tutorial using
 
 ``` r
-library(PlotAnnotations)
-## basic example code
+learnr::run_tutorial(name="plot_annotations", package="PlotAnnotations")
 ```
-
