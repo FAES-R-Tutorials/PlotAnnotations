@@ -9,3 +9,5 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Language: en
+URL: https://github.com/FAES-R-Tutorials/PlotAnnotations
+BugReports: https://github.com/FAES-R-Tutorials/PlotAnnotations/issues
