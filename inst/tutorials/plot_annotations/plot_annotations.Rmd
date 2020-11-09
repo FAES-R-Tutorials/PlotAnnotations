@@ -1,5 +1,5 @@
 ---
-title: "plot_annotations"
+title: "Add annotations to ggplots"
 output: learnr::tutorial
 runtime: shiny_prerendered
 ---
