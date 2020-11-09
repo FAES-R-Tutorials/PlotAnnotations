@@ -5,7 +5,7 @@
 [![R build status](https://github.com/FAES-R-Tutorials/PlotAnnotations/workflows/R-CMD-check/badge.svg)](https://github.com/FAES-R-Tutorials/PlotAnnotations/actions)
 <!-- badges: end -->
 
-The goal of PlotAnnotations is to ...
+The goal of PlotAnnotations is to demonstrate how to add annotations to a ggplot graph
 
 ## Installation
 
