@@ -269,7 +269,7 @@ plt$data <- econ_data
 
 Let's move the legend above the graph. The last line of code ensures the legend is in one row
 
-```{r a9, echo=TRUE, exercise=TRUE, exercise.setup='a9setup'}
+```{r a9, echo=TRUE, exercise=TRUE, exercise.setup='a8'}
 plt + theme(legend.____ = 'top',
             legend.____ = 'horizontal')+
   guides(color = guide_legend(nrow=1))
