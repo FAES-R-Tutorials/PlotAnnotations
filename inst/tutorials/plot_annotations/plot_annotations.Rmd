@@ -6,6 +6,7 @@ output:
     allow_skip: true
     css: css/style.css
 runtime: shiny_prerendered
+description: "How to annotate a plot"
 ---
 
 ```{r setup, include=FALSE}
