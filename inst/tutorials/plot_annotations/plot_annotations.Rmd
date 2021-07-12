@@ -12,7 +12,7 @@ runtime: shiny_prerendered
 library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
-econ_data <- read_csv('www/EconomistData.csv')
+econ_data <- read_csv('data/EconomistData.csv')
 theme_set(theme_bw())
 
 ```
@@ -134,7 +134,7 @@ You can also play around with the text color to see what happens. `gray20` means
 
 We need to move the labels off the actual points to make them easier to read. We'll use the **ggrepel** library to help make sure we have less overlap in the graph elements
 
-```{r a7, exercise=TRUE, exercise.eval=TRUE, echo = T}
+```{r a7, exercise=TRUE, exercise.eval=FALSE, echo = T}
 library(ggrepel) 
 pointsToLabel <- c("Russia", "Venezuela", "Iraq", "Myanmar", "Sudan",
                    "Afghanistan", "Congo", "Greece", "Argentina", "Brazil",
@@ -142,7 +142,7 @@ pointsToLabel <- c("Russia", "Venezuela", "Iraq", "Myanmar", "Sudan",
                    "Botswana", "Cape Verde", "Bhutan", "Rwanda", "France",
                    "United States", "Germany", "Britain", "Barbados", "Norway", "Japan",
                    "New Zealand", "Singapore")
-(plt <- ggplot(econ_data,
+plt <- ggplot(econ_data,
        aes(x = CPI, y = HDI, color=Region))+
   geom_smooth(color='red', se=F, method='lm', formula = y~poly(x,2)) + 
   geom_point(shape = 1, size = 4, stroke=1.25) + 
@@ -150,10 +150,11 @@ pointsToLabel <- c("Russia", "Venezuela", "Iraq", "Myanmar", "Sudan",
             color = 'gray20', 
             force=10,
             data = econ_data %>% 
-              dplyr::filter(Country %in% pointsToLabel)))
+              dplyr::filter(Country %in% pointsToLabel))
+plt
 ```
 
-```{r a8-setup, results='hide', echo=FALSE}
+```{r plting, include=FALSE}
 library(ggrepel) 
 pointsToLabel <- c("Russia", "Venezuela", "Iraq", "Myanmar", "Sudan",
                    "Afghanistan", "Congo", "Greece", "Argentina", "Brazil",
@@ -161,7 +162,7 @@ pointsToLabel <- c("Russia", "Venezuela", "Iraq", "Myanmar", "Sudan",
                    "Botswana", "Cape Verde", "Bhutan", "Rwanda", "France",
                    "United States", "Germany", "Britain", "Barbados", "Norway", "Japan",
                    "New Zealand", "Singapore")
-(plt <- ggplot(econ_data,
+plt <- ggplot(econ_data,
        aes(x = CPI, y = HDI, color=Region))+
   geom_smooth(color='red', se=F, method='lm', formula = y~poly(x,2)) + 
   geom_point(shape = 1, size = 4, stroke=1.25) + 
@@ -169,8 +170,10 @@ pointsToLabel <- c("Russia", "Venezuela", "Iraq", "Myanmar", "Sudan",
             color = 'gray20', 
             force=10,
             data = econ_data %>% 
-              dplyr::filter(Country %in% pointsToLabel)))
+              dplyr::filter(Country %in% pointsToLabel))
 ```
+
+
 
 Play around with the `force=` option to see how that will affect where the labels are placed. This parameter 
 controls the _repulsive force_ between the labels. 
@@ -184,12 +187,14 @@ In order to match the region names with the original graph, we need to do a bit 
 The following code uses the `factor` function to explicitly reset the labels, and updates the plot just by updating the data element of the `plt` object. 
 
 
-We can also do this same data transformation using functions from the ** forcats** package. Change the code for data transformation to use pipes and functions from the **forcats** package. 
+We can also do this same data transformation using functions from the **forcats** package. Change the code for data transformation to use pipes and functions from the **forcats** package. 
 
 Note that we have a bunch of `\n` in the labels. This stands for _newline_ and 
 will put a line break at that point.
 
-```{r a8, exercise=TRUE, exercise.eval=TRUE, echo = T, exercise.lines = 20, exercise.setup='a8-setup'}
+
+
+```{r a8, echo = T, exercise.lines = 20}
 econ_data$Region <- 
   factor(econ_data$Region,
          levels = c("EU W. Europe",
@@ -205,88 +210,23 @@ econ_data$Region <-
                     "Middle East &\nnorth Africa",
                     "Sub-Saharan\nAfrica"))
 
-plt$data = econ_data 
+plt$data <- econ_data 
 plt 
 ```
-
-```{r a8-hint-1}
-econ_data <- econ_data %>% 
-  mutate(Region = fct_recode(Region,
-    'OECD' = 'EU W. Europe', 
-    'Asia &\nOceania' = 'Asia Pacific', 
-    'Central &\nEastern Europe' = 'East EU Cemt Asia', 
-    'Middle East &\nNorth Africa'='MENA', 
-    'Sub-Saharan\nAfrica' = 'SSA'
-  ))
-
-plt$data <-  econ_data
-plt
-```
-```{r, a8-hint-2}
-econ_data <- econ_data %>% 
-  mutate(Region = fct_recode(Region,
-    'OECD' = 'EU W. Europe', 
-    'Asia &\nOceania' = 'Asia Pacific', 
-    'Central &\nEastern Europe' = 'East EU Cemt Asia', 
-    'Middle East &\nNorth Africa'='MENA', 
-    'Sub-Saharan\nAfrica' = 'SSA'
-  )) %>% 
-  mutate(Region = fct_relevel(Region,
-                     "OECD",
-                    "Americas",
-                    "Asia &\nOceania",
-                    "Central &\nEastern Europe",
-                    "Middle East &\nNorth Africa",
-                    "Sub-Saharan\nAfrica"))
-
-plt$data <- econ_data
-plt
-```
-
-```{r a9setup, echo=FALSE, results='hide'}
-econ_data <- econ_data %>% 
-  mutate(Region = fct_recode(Region,
-    'OECD' = 'EU W. Europe', 
-    'Asia &\nOceania' = 'Asia Pacific', 
-    'Central &\nEastern Europe' = 'East EU Cemt Asia', 
-    'Middle East &\nNorth Africa'='MENA', 
-    'Sub-Saharan\nAfrica' = 'SSA'
-  )) %>% 
-  mutate(Region = fct_relevel(Region,
-                     "OECD",
-                    "Americas",
-                    "Asia &\nOceania",
-                    "Central &\nEastern Europe",
-                    "Middle East &\nNorth Africa",
-                    "Sub-Saharan\nAfrica"))
-
-plt$data <- econ_data
-```
-
 
 
 ## Position of the legend
 
 Let's move the legend above the graph. The last line of code ensures the legend is in one row
 
-```{r a9, echo=TRUE, exercise=TRUE, exercise.eval=FALSE, exercise.setup='a9setup'}
-plt + theme(legend.____ = 'top',
-            legend.____ = 'horizontal')+
-  guides(color = guide_legend(nrow=1))
-```
-
-```{r a9-solution}
-plt + theme(legend.position = 'top',
+```{r a9,, echo=TRUE}
+plt <- plt + theme(legend.position = 'top',
             legend.direction = 'horizontal')+
   guides(color = guide_legend(nrow=1))
+plt
 ```
 
 
-```{r a10-setup, echo=FALSE, results='hide'}
-plt=plt + theme(legend.position = 'top',
-            legend.direction = 'horizontal')+
-  guides(color = guide_legend(nrow=1))
-```
 
 ## Updating colors
 
@@ -304,17 +244,18 @@ the factor levels. You can specify colors in 3 ways
 How do you figure these out? Couple of sites I use are [ttps://www.color-hex.com](ttps://www.color-hex.com) and 
 [https://www.w3schools.com/colors/colors_picker.asp](https://www.w3schools.com/colors/colors_picker.asp)
 
-```{r a10, exercise=TRUE, exercise.eval=TRUE, echo=TRUE, exercise.setup = 'a10-setup'}
-(plt <- plt + scale_color_manual(name = '',
+```{r a10, echo=TRUE, eval=TRUE}
+plt <- plt + scale_color_manual(name = '',
                          values = c("#24576D",
                                 "#099DD7",
                                 "#28AADC",
                                 "#248E84",
                                 "#F2583F",
-                                "#96503F")))
+                                "#96503F"))
+plt
 ```
 
-```{r a11-setup, echo=FALSE, results='hide'}
+```{r a11-setup}
 plt <- plt + scale_color_manual(name = '',
                          values = c("#24576D",
                                 "#099DD7",
@@ -324,26 +265,20 @@ plt <- plt + scale_color_manual(name = '',
                                 "#96503F"))
 ```
 
+
 ## Final cleaning
 
 You can now add the labels and titles to make this plot like the original. For a reminder, here is the original
 plot
 
-![label](img/economist1.gif)
+![](images/economist1.gif)
 
 
-```{r a11, exercise=TRUE, exercise.eval=FALSE, exercise.setup = 'a11-setup'}
-
-(plt_corrupt <- 
-   plt +
-  labs(title = "Corruption and Human Development")
-)
-```
-
-```{r a13-setup, echo=F, results='hide'}
+```{r a11, echo=TRUE}
 plt_corrupt <- 
    plt +
-  labs(title = 'Corruption and Human Development')
+  labs(title = "Corruption and Human Development")
+plt_corrupt
 
 ```
 
@@ -354,16 +289,16 @@ The **extrafont** package allows you to use any fonts installed on your computer
 
 You first need to run a few commands, that may take a bit of time, on your computer. You can open up another RStudio instance to run this.
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, echo=TRUE}
 library(extrafont)
 font_import()
 ```
 
 This can take a few minutes. Once this is run, you can play around
 
-```{r a13, exercise.setup='a13-setup',exercise=TRUE,}
+```{r a13, echo=TRUE}
 library(extrafont)
-plt_corrupt + 
+plt_corrupt +
   theme(title = element_text(family = 'Georgia'),
         axis.title = element_text(family='Roboto Slab'),
         legend.text = element_text(family='Comic Sans MS')) # don't do this
